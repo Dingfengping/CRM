@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户列表 - 云客 yunke.ai</title>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div class="app-layout">
+  <nav class="top-nav">
+    <div class="top-nav-left">
+      <div class="logo-area">
+        <div class="logo-sq">云</div>
+        <span class="logo-name">云客</span>
+        <span class="logo-domain">yunke.ai</span>
+      </div>
+      <div class="top-nav-menu">
+        <div class="nav-item active" onclick="location.href='sea-pool.html'">客户</div>
+        <div class="nav-item" onclick="location.href='call-center.html'">销售</div>
+        <div class="nav-item">沟通</div>
+        <div class="nav-item">AI分析</div>
+        <div class="nav-item" onclick="location.href='settings.html'">设置</div>
+      </div>
+    </div>
+    <div class="top-nav-right">
+      <button class="btn-back">返回旧版</button>
+      <button class="icon-btn">&#x1F50D;</button>
+      <button class="icon-btn">&#x1F514;</button>
+      <div class="user-area">
+        <div class="user-avatar">超</div>
+        <span class="user-name">超级管理员</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-body">
+    <aside class="sidebar">
+      <div class="sidebar-search">
+        <input type="text" placeholder="&#x1F50D; 搜索菜单">
+      </div>
+      <div class="sidebar-menu">
+        <div class="menu-item active expanded">
+          &#x1F4CB; 客户管理 <span class="menu-arrow">&#x25B6;</span>
+        </div>
+        <div class="sub-menu open" style="max-height:200px;">
+          <div class="menu-item" onclick="location.href='sea-pool.html'">客户公海</div>
+          <div class="menu-item active" onclick="location.href='customer-list.html'">客户列表</div>
+        </div>
+        <div class="menu-item" onclick="location.href='call-center.html'">&#x1F4DE; 外呼工作台</div>
+        <div class="menu-item">&#x1F4AC; 沟通记录</div>
+        <div class="menu-item" onclick="location.href='settings.html'">&#x2699; 设置</div>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <div class="breadcrumb">
+        <a>首页</a><span class="sep">/</span>
+        <a>客户管理</a><span class="sep">/</span>
+        <span>客户列表</span>
+      </div>
+
+      <div class="action-bar">
+        <span class="page-title-inline">客户列表</span>
+        <select class="search-type">
+          <option>客户编号</option>
+          <option>客户姓名</option>
+          <option>客户手机号</option>
+          <option>邮箱</option>
+          <option>QQ</option>
+          <option>微信</option>
+        </select>
+        <input type="text" class="search-input" placeholder="请输入客户编号">
+        <button class="btn btn-primary btn-sm">&#x1F50D; 搜索</button>
+        <button class="btn btn-secondary btn-sm" onclick="toggleFilter()">&#x2699; 高级筛选</button>
+        <button class="btn btn-secondary btn-sm" onclick="openImportModal()">导入</button>
+        <button class="btn btn-primary" onclick="openCreateCustomerModal()">+ 新建客户</button>
+      </div>
+
+      <div class="filter-area" id="filterArea">
+        <div class="filter-row">
+          <div class="filter-item"><span class="filter-label">性别:</span><select><option>全部</option><option>男</option><option>女</option></select></div>
+          <div class="filter-item"><span class="filter-label">会员等级:</span><select><option>全部</option><option>优选SVIP会员</option><option>优选七星会员</option></select></div>
+          <div class="filter-item"><span class="filter-label">客户来源:</span><select><option>全部</option><option>线上注册</option><option>外呼导入</option><option>门店录入</option><option>转介绍</option><option>其他</option></select></div>
+          <div class="filter-item"><span class="filter-label">跟进人:</span><input type="text" style="height:32px;border:1px solid #D9D9D9;border-radius:6px;padding:0 8px;font-size:13px;width:120px;" placeholder="搜索人员"></div>
+          <button class="btn-reset">重置</button>
+        </div>
+      </div>
+
+      <div class="table-stats">
+        <span>共 <b style="color:#1D2129;">12,458</b> 条记录</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40px;text-align:center;"><input type="checkbox"></th>
+              <th style="width:260px;">客户</th>
+              <th style="width:140px;">会员等级</th>
+              <th style="width:100px;">跟进人</th>
+              <th style="width:100px;">客户来源</th>
+              <th style="width:130px;">手机号</th>
+              <th style="width:100px;text-align:center;">是否已加微信</th>
+              <th style="width:140px;">最近联系时间</th>
+              <th style="width:180px;">最近订购商品</th>
+              <th style="width:100px;text-align:right;">售价</th>
+              <th style="width:140px;text-align:center;">操作</th>
+            </tr>
+          </thead>
+          <tbody id="customerListBody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <span>共 12,458 条</span>
+        <select><option>20 条/页</option></select>
+        <button class="page-btn disabled">&lt;</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span>...</span>
+        <button class="page-btn">623</button>
+        <button class="page-btn">&gt;</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="modalContainer"></div>
+<div id="toastContainer"></div>
+<script src="../js/common.js"></script>
+<script>
+  const tbody = document.getElementById('customerListBody');
+  tbody.innerHTML = CUSTOMER_DATA.map(c => `
+    <tr>
+      <td class="center"><input type="checkbox"></td>
+      <td>
+        <div class="customer-cell">
+          <div class="customer-avatar">${c.name.charAt(0)}</div>
+          <div class="customer-info">
+            <div class="cust-name">${c.name}</div>
+            <div class="cust-id">${c.id} <span class="copy-icon" onclick="copyToClipboard('${c.id}')">📋</span></div>
+          </div>
+        </div>
+      </td>
+      <td><span class="tag ${c.levelTag}">${c.level}</span></td>
+      <td>${c.follower}</td>
+      <td>${c.source}</td>
+      <td>${c.phone}</td>
+      <td class="center">${c.hasWechat ? '<span style="color:#52C412;">✓</span>' : '<span style="color:#C9CDD4;">✕</span>'}</td>
+      <td>${c.lastContact}</td>
+      <td>${c.product}</td>
+      <td class="right">${c.price}</td>
+      <td class="center">
+        <div class="action-links">
+          <a onclick="openCustomerDetail('${c.id}')">查看</a>
+          <span class="sep">|</span>
+          <a onclick="showToast('编辑功能','info')">编辑</a>
+          <span class="sep">|</span>
+          <a onclick="openDeleteModal('${c.id}')">删除</a>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+</script>
+</body>
+</html>
